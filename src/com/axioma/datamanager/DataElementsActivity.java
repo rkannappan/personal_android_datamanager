@@ -1,8 +1,10 @@
 package com.axioma.datamanager;
 
-import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 
 public class DataElementsActivity extends Activity {
 
@@ -19,4 +21,16 @@ public class DataElementsActivity extends Activity {
       return true;
    }
 
+   @Override
+   public boolean onOptionsItemSelected(MenuItem item) {
+      // Handle presses on the action bar items
+      switch (item.getItemId()) {
+         case R.id.action_settings:
+            Intent i = new Intent(getApplicationContext(), AppSettingsActivity.class);
+            startActivity(i);
+            return true;
+         default:
+            return super.onOptionsItemSelected(item);
+      }
+   }
 }

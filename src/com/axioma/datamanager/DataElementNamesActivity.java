@@ -16,6 +16,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 
 import com.axioma.datamanager.async.AsyncCallback;
 import com.axioma.datamanager.async.GetDataElementNamesInBackground;
@@ -25,20 +26,24 @@ import com.axioma.datamanager.async.GetDataElementNamesInBackground;
  */
 public class DataElementNamesActivity extends ListActivity implements AsyncCallback {
 
-   private static final String ATTR_NAME = "name";
+   private static final String ELEMENT_NAME = "name";
 
-   //   public final static String DATES_RESULTS_MESSAGE = "com.example.myfirstapp.DATES_RESULTS";
-   //   public final static String SELECTED_ATTR_NAME = "com.example.myfirstapp.SELECTED_ATTR_NAME";
+   private String dataElementType = null;
+
+   public final static String SELECTED_DATA_ELEMENT_TYPE = "com.axioma.datamanager.selected_data_element_type";
+   public final static String SELECTED_DATA_ELEMENT_NAME = "com.example.datamanager.selected_data_element_name";
 
    @Override
    public void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
 
       Intent intent = getIntent();
-      String dataElement = intent.getStringExtra(DataElementsActivity.SELECTED_DATA_ELEMENT_NAME);
-      System.out.println(dataElement);
+      String dataElementType = intent.getStringExtra(DataElementsActivity.SELECTED_DATA_ELEMENT_TYPE);
+      System.out.println(dataElementType);
 
-      new GetDataElementNamesInBackground(DataElementNamesActivity.this, dataElement, this).execute();
+      this.dataElementType = dataElementType;
+
+      new GetDataElementNamesInBackground(DataElementNamesActivity.this, dataElementType, this).execute();
    }
 
    @Override
@@ -56,7 +61,7 @@ public class DataElementNamesActivity extends ListActivity implements AsyncCallb
             HashMap<String, String> map = new HashMap<String, String>();
 
             // adding each child node to HashMap key => value
-            map.put(DataElementNamesActivity.ATTR_NAME, name);
+            map.put(DataElementNamesActivity.ELEMENT_NAME, name);
 
             attributeNamesList.add(map);
          }
@@ -69,7 +74,7 @@ public class DataElementNamesActivity extends ListActivity implements AsyncCallb
        * */
       ListAdapter adapter =
                new SimpleAdapter(this, attributeNamesList, R.layout.list_item,
-                        new String[] { DataElementNamesActivity.ATTR_NAME }, new int[] { R.id.name });
+                        new String[] { DataElementNamesActivity.ELEMENT_NAME }, new int[] { R.id.name });
 
       setListAdapter(adapter);
 
@@ -81,15 +86,16 @@ public class DataElementNamesActivity extends ListActivity implements AsyncCallb
 
          @Override
          public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            //            // getting values from selected ListItem
-            //            String name = ((TextView) view.findViewById(R.id.name)).getText().toString();
-            //            //                String name = ((ListView) view.findViewById(android.R.id.list)).getSelectedItem().toString();
-            //
-            //            System.out.println("name is " + name);
-            //
-            //            Intent intent = new Intent(getApplicationContext(), AttributeDatesListActivity.class);
-            //            intent.putExtra(AttributeNamesListActivity.SELECTED_ATTR_NAME, name);
-            //            startActivity(intent);
+            // getting values from selected ListItem
+            String dataElementName = ((TextView) view.findViewById(R.id.name)).getText().toString();
+            //                String name = ((ListView) view.findViewById(android.R.id.list)).getSelectedItem().toString();
+
+            System.out.println("dataElementName is " + dataElementName);
+
+            Intent intent = new Intent(getApplicationContext(), DataElementDatesActivity.class);
+            intent.putExtra(DataElementNamesActivity.SELECTED_DATA_ELEMENT_TYPE, dataElementType);
+            intent.putExtra(DataElementNamesActivity.SELECTED_DATA_ELEMENT_NAME, dataElementName);
+            startActivity(intent);
          }
       });
    }

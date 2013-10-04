@@ -20,9 +20,20 @@ import com.google.common.collect.Lists;
  */
 public class DataElementsActivity extends ListActivity {
    
-   public static final String SELECTED_DATA_ELEMENT_NAME = "com.axioma.datamanager.selected_data_element_name";
+   public static final String SELECTED_DATA_ELEMENT_TYPE = "com.axioma.datamanager.selected_data_element_name";
 
    private List<String> dataElements;
+
+   public final static String PORTFOLIOS = "Portfolios";
+   public final static String BENCHMARKS = "Benchmarks";
+   public final static String ASSET_IDENTIFIERS = "Asset Identifiers";
+   public final static String ALPHAS = "Alphas";
+   public final static String FUNDAMENTAL_ATTRIBUTES = "Fundamental Attributes";
+   public final static String FACTOR_LIBRARIES = "Factor Libraries";
+   public final static String TEXT_ATTRIBUTES = "Text Attributes";
+   public final static String ETF_CONSTITUENTS = "ETF Constituents";
+   public final static String CURRENCY_ATTRIBUTES = "Currency Attributes";
+   public final static String FACTOR_RISK_MODELS = "Factor Risk Models";
 
    @Override
    protected void onCreate(Bundle savedInstanceState) {
@@ -54,16 +65,16 @@ public class DataElementsActivity extends ListActivity {
 
    private void addDataElements() {
       this.dataElements = Lists.newArrayList();
-      this.dataElements.add("Portfolios");
-      this.dataElements.add("Benchmarks");
-      this.dataElements.add("Asset Identifiers");
-      this.dataElements.add("Alphas");
-      this.dataElements.add("Fundamental Attributes");
-      this.dataElements.add("Factor Libraries");
-      this.dataElements.add("Text Attributes");
-      this.dataElements.add("ETF Constituents");
-      this.dataElements.add("Currency Attributes");
-      this.dataElements.add("Factor Risk Models");
+      this.dataElements.add(DataElementsActivity.PORTFOLIOS);
+      this.dataElements.add(DataElementsActivity.BENCHMARKS);
+      this.dataElements.add(DataElementsActivity.ASSET_IDENTIFIERS);
+      this.dataElements.add(DataElementsActivity.ALPHAS);
+      this.dataElements.add(DataElementsActivity.FUNDAMENTAL_ATTRIBUTES);
+      this.dataElements.add(DataElementsActivity.FACTOR_LIBRARIES);
+      this.dataElements.add(DataElementsActivity.TEXT_ATTRIBUTES);
+      this.dataElements.add(DataElementsActivity.ETF_CONSTITUENTS);
+      this.dataElements.add(DataElementsActivity.CURRENCY_ATTRIBUTES);
+      this.dataElements.add(DataElementsActivity.FACTOR_RISK_MODELS);
 
       ArrayAdapter<String> adapter =
                new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
@@ -84,7 +95,7 @@ public class DataElementsActivity extends ListActivity {
             System.out.println("dataElement is " + dataElement);
 
             Intent intent = new Intent(getApplicationContext(), DataElementNamesActivity.class);
-            intent.putExtra(DataElementsActivity.SELECTED_DATA_ELEMENT_NAME, dataElement);
+            intent.putExtra(DataElementsActivity.SELECTED_DATA_ELEMENT_TYPE, dataElement);
             startActivity(intent);
          }
       });

@@ -32,6 +32,10 @@
             android:name="com.axioma.datamanager.DataElementNamesActivity"
             android:label="@string/names" > 
         </activity>
+        <activity
+            android:name="com.axioma.datamanager.DataElementDatesActivity"
+            android:label="@string/dates" > 
+        </activity>
     </application>
 
 </manifest>

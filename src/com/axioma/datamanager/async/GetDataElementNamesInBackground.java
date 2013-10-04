@@ -3,6 +3,7 @@ package com.axioma.datamanager.async;
 import android.content.Context;
 import android.os.AsyncTask;
 
+import com.axioma.datamanager.DataElementsActivity;
 import com.axioma.datamanager.util.PreferenceUtil;
 import com.axioma.datamanager.util.RestClientUtil;
 
@@ -38,25 +39,25 @@ public class GetDataElementNamesInBackground extends AsyncTask<Void, Void, Strin
    private String getURL(final String dataElementType) {
       String url = null;
 
-      if (dataElementType.equals("Alphas")) {
+      if (dataElementType.equals(DataElementsActivity.ALPHAS)) {
          url = PreferenceUtil.getBaseWSURL(this.context) + "attributeNames?tagName=Alpha";
-      } else if (dataElementType.equals("Benchmarks")) {
+      } else if (dataElementType.equals(DataElementsActivity.BENCHMARKS)) {
          url = PreferenceUtil.getBaseWSURL(this.context) + "attributeNames?tagName=Benchmark";
-      } else if (dataElementType.equals("Asset Identifiers")) {
+      } else if (dataElementType.equals(DataElementsActivity.ASSET_IDENTIFIERS)) {
          url = PreferenceUtil.getBaseWSURL(this.context) + "attributeNames?tagName=Asset Identifier";
-      } else if (dataElementType.equals("Fundamental Attributes")) {
+      } else if (dataElementType.equals(DataElementsActivity.FUNDAMENTAL_ATTRIBUTES)) {
          url = PreferenceUtil.getBaseWSURL(this.context) + "attributeNames?tagName=Fundamental Attribute";
-      } else if (dataElementType.equals("Factor Libraries")) {
+      } else if (dataElementType.equals(DataElementsActivity.FACTOR_LIBRARIES)) {
          url = PreferenceUtil.getBaseWSURL(this.context) + "attributeNames?tagName=Factor Library";
-      } else if (dataElementType.equals("Text Attributes")) {
+      } else if (dataElementType.equals(DataElementsActivity.TEXT_ATTRIBUTES)) {
          url = PreferenceUtil.getBaseWSURL(this.context) + "attributeNames?unitType=TEXT";
-      } else if (dataElementType.equals("ETF Constituents")) {
+      } else if (dataElementType.equals(DataElementsActivity.ETF_CONSTITUENTS)) {
          url = PreferenceUtil.getBaseWSURL(this.context) + "attributeNames?tagName=Composite Constituents Attribute";
-      } else if (dataElementType.equals("Portfolios")) {
+      } else if (dataElementType.equals(DataElementsActivity.PORTFOLIOS)) {
          url = PreferenceUtil.getBaseWSURL(this.context) + "portfolioNames";
-      } else if (dataElementType.equals("Currency Attributes")) {
+      } else if (dataElementType.equals(DataElementsActivity.CURRENCY_ATTRIBUTES)) {
          url = PreferenceUtil.getBaseWSURL(this.context) + "currencyAttributeNames";
-      } else if (dataElementType.equals("Factor Risk Models")) {
+      } else if (dataElementType.equals(DataElementsActivity.FACTOR_RISK_MODELS)) {
          url = PreferenceUtil.getBaseWSURL(this.context) + "factorRiskModelNames";
       }
 

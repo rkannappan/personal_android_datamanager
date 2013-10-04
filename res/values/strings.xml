@@ -3,6 +3,7 @@
 
     <string name="app_name">Axioma Data Manager</string>
     <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="names">Names</string>
+    <string name="dates">Dates</string>
 
 </resources>

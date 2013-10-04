@@ -7,6 +7,8 @@
     <uses-sdk
         android:minSdkVersion="11"
         android:targetSdkVersion="18" />
+    
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
@@ -25,6 +27,10 @@
         <activity
             android:name="com.axioma.datamanager.AppSettingsActivity"
             android:label="@string/action_settings" > 
+        </activity>
+        <activity
+            android:name="com.axioma.datamanager.DataElementNamesActivity"
+            android:label="@string/names" > 
         </activity>
     </application>
 

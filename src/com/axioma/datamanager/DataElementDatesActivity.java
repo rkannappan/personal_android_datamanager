@@ -17,6 +17,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.axioma.datamanager.async.AsyncCallback;
 import com.axioma.datamanager.async.GetDataElementDatesInBackground;
@@ -53,14 +54,12 @@ public class DataElementDatesActivity extends ListActivity implements AsyncCallb
    public void postProcessing(final String results) {
       ArrayList<HashMap<String, String>> attributeDatesList = new ArrayList<HashMap<String, String>>();
 
-      // try parse the string to a JSON object
       try {
          JSONArray dates = new JSONArray(results);
 
          for (int i = 0; i < dates.length(); i++) {
             String date = (String) dates.get(i);
 
-            // creating new HashMap
             HashMap<String, String> map = new HashMap<String, String>();
 
             // adding each child node to HashMap key => value
@@ -100,6 +99,13 @@ public class DataElementDatesActivity extends ListActivity implements AsyncCallb
 
          @Override
          public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            // We don't support getting full data for FRM.
+            if (DataElementsActivity.FACTOR_RISK_MODELS.equals(dataElementType)) {
+               Toast.makeText(getApplicationContext(), "Full Data View is not supported for factor risk models",
+                        Toast.LENGTH_SHORT).show();
+               return;
+            }
+
             // getting values from selected ListItem
             String dataElementDate = ((TextView) view.findViewById(R.id.name)).getText().toString();
 

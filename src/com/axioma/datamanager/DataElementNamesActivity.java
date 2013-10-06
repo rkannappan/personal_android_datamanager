@@ -48,7 +48,7 @@ public class DataElementNamesActivity extends ListActivity implements AsyncCallb
 
    @Override
    public void postProcessing(String results) {
-      ArrayList<HashMap<String, String>> attributeNamesList = new ArrayList<HashMap<String, String>>();
+      ArrayList<HashMap<String, String>> namesList = new ArrayList<HashMap<String, String>>();
 
       // try parse the string to a JSON object
       try {
@@ -63,23 +63,25 @@ public class DataElementNamesActivity extends ListActivity implements AsyncCallb
             // adding each child node to HashMap key => value
             map.put(DataElementNamesActivity.ELEMENT_NAME, name);
 
-            attributeNamesList.add(map);
+            namesList.add(map);
          }
       } catch (JSONException e) {
          Log.e("JSON Parser", "Error parsing data " + e.toString());
       }
 
-        /**
+      ListView lv = getListView();
+      TextView tv = new TextView(this);
+      tv.setText("\n" + "   Number of " + this.dataElementType + " - " + namesList.size() + "\n");
+      lv.addHeaderView(tv);
+
+      /**
        * Updating parsed JSON data into ListView
        * */
       ListAdapter adapter =
-               new SimpleAdapter(this, attributeNamesList, R.layout.list_item,
+               new SimpleAdapter(this, namesList, R.layout.list_item,
                         new String[] { DataElementNamesActivity.ELEMENT_NAME }, new int[] { R.id.name });
 
       setListAdapter(adapter);
-
-      // selecting single ListView item
-      ListView lv = getListView();
 
       // Launching new screen on Selecting Single ListItem
       lv.setOnItemClickListener(new OnItemClickListener() {

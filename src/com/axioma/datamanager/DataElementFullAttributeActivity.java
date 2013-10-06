@@ -1,5 +1,6 @@
 package com.axioma.datamanager;
 
+import java.text.DecimalFormat;
 import java.util.Iterator;
 
 import org.json.JSONArray;
@@ -12,6 +13,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
+import android.widget.TextView;
 
 import com.axioma.datamanager.async.AsyncCallback;
 import com.axioma.datamanager.async.GetAttributeDataInBackground;
@@ -22,8 +24,8 @@ import com.axioma.datamanager.async.GetAttributeDataInBackground;
 public class DataElementFullAttributeActivity extends Activity implements AsyncCallback {
 
    private String dataElementType;
-
-   private static final String asset = "asset";
+   private String dataElementName;
+   private String dataElementDate;
 
    @Override
    public void onCreate(Bundle savedInstanceState) {
@@ -40,6 +42,8 @@ public class DataElementFullAttributeActivity extends Activity implements AsyncC
       System.out.println("date in intent " + date);
 
       this.dataElementType = type;
+      this.dataElementName = name;
+      this.dataElementDate = date;
 
       new GetAttributeDataInBackground(DataElementFullAttributeActivity.this, type, name, date, this).execute();
    }
@@ -47,6 +51,10 @@ public class DataElementFullAttributeActivity extends Activity implements AsyncC
    @Override
    public void postProcessing(String results) {
       String[] assetValues = null;
+      int numAssets = 0;
+      String unitType = "NUMBER"; // For currency attributes
+
+      DecimalFormat df = new DecimalFormat("#.####");
 
       // try parse the string to a JSON object
       try {
@@ -56,22 +64,24 @@ public class DataElementFullAttributeActivity extends Activity implements AsyncC
             attribute = attribute.getJSONObject("holdings");
          }
 
-         String unitType = "NUMBER"; // For currency attributes
          if (!DataElementsActivity.CURRENCY_ATTRIBUTES.equals(this.dataElementType)) {
             unitType = attribute.getString("unitType");
             System.out.println(unitType);
          }
 
          JSONObject values = attribute.getJSONObject("values");
+         numAssets = values.length();
 
          boolean currencyValueAttribute = isCurrencyValueAttribute(unitType);
          if (currencyValueAttribute) {
-            assetValues = new String[values.length() * 3];
+            assetValues = new String[numAssets * 3];
          } else {
-            assetValues = new String[values.length() * 2];
+            assetValues = new String[numAssets * 2];
          }
 
          int i = 0;
+
+         boolean doubleValueAttribute = isDoubleValueAttribute(unitType);
 
          Iterator it = values.keys();
          while (it.hasNext()) {
@@ -83,13 +93,13 @@ public class DataElementFullAttributeActivity extends Activity implements AsyncC
                String value = currVal.getString(0);
                String curr = currVal.getString(1);
 
-               assetValues[i++] = value;
+               assetValues[i++] = this.formatValue(df, value);
                assetValues[i++] = curr;
             } else {
                String value = values.getString(symbol);
                System.out.println(value);
 
-               assetValues[i++] = value;
+               assetValues[i++] = doubleValueAttribute ? this.formatValue(df, value) : value;
             }
          }
 
@@ -102,10 +112,19 @@ public class DataElementFullAttributeActivity extends Activity implements AsyncC
          Log.e("JSON Parser", "Error parsing data " + e.toString());
       }
 
-      GridView gridView = (GridView) findViewById(R.id.assets);
+      TextView textView = (TextView) findViewById(R.id.header);
+      StringBuilder sb = new StringBuilder();
+      sb.append("\n");
+      sb.append("   Type: ").append(this.dataElementType).append("\n");
+      sb.append("   Name: ").append(this.dataElementName).append("\n");
+      sb.append("   Date: ").append(this.dataElementDate).append("\n");
+      sb.append("   Unit Type: ").append(unitType).append("\n");
+      sb.append("   Number of Assets: ").append(numAssets).append("\n");
+      textView.setText(sb.toString());
 
       ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, assetValues);
 
+      GridView gridView = (GridView) findViewById(R.id.assets);
       gridView.setAdapter(adapter);
    }
 
@@ -115,5 +134,17 @@ public class DataElementFullAttributeActivity extends Activity implements AsyncC
       }
 
       return false;
+   }
+
+   private boolean isDoubleValueAttribute(final String unitType) {
+      if (unitType.equals("SHARES") || unitType.equals("NUMBER")) {
+         return true;
+      }
+
+      return false;
+   }
+
+   private String formatValue(final DecimalFormat df, final String value) {
+      return df.format(Double.valueOf(value));
    }
 }

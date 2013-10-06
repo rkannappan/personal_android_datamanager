@@ -34,7 +34,7 @@ public class GetDataElementDatesInBackground extends AsyncTask<Void, Void, Strin
    @Override
    protected void onPreExecute() {
       this.dialog = new ProgressDialog(this.context);
-      this.dialog.setMessage("Getting dates for " + this.dataElementName + "...");
+      this.dialog.setMessage("Getting dates for " + this.dataElementName + " ...");
       this.dialog.show();
    }
 

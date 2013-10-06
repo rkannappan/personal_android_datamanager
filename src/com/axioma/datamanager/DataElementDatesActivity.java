@@ -72,6 +72,20 @@ public class DataElementDatesActivity extends ListActivity implements AsyncCallb
          Log.e("JSON Parser", "Error parsing data " + e.toString());
       }
 
+      ListView lv = getListView();
+      TextView tv = new TextView(this);
+      StringBuilder sb = new StringBuilder();
+      sb.append("\n");
+      sb.append("   Type: ").append(this.dataElementType).append("\n");
+      sb.append("   Name: ").append(this.dataElementName).append("\n");
+      sb.append("   Start Date: ").append(attributeDatesList.get(0).get(DataElementDatesActivity.ELEMENT_DATE)).append("\n");
+      sb.append("   End Date:   ")
+               .append(attributeDatesList.get(attributeDatesList.size() - 1).get(DataElementDatesActivity.ELEMENT_DATE))
+               .append("\n");
+      sb.append("   Number of Dates: ").append(attributeDatesList.size()).append("\n");
+      tv.setText(sb.toString());
+      lv.addHeaderView(tv);
+
       /**
        * Updating parsed JSON data into ListView
        * */
@@ -80,9 +94,6 @@ public class DataElementDatesActivity extends ListActivity implements AsyncCallb
                         new String[] { DataElementDatesActivity.ELEMENT_DATE }, new int[] { R.id.name });
 
       setListAdapter(adapter);
-
-      // selecting single ListView item
-      ListView lv = getListView();
 
       // Launching new screen on Selecting Single ListItem
       lv.setOnItemClickListener(new OnItemClickListener() {

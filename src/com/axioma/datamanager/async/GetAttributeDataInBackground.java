@@ -36,7 +36,7 @@ public class GetAttributeDataInBackground extends AsyncTask<Void, Void, String> 
    @Override
    protected void onPreExecute() {
       this.dialog = new ProgressDialog(this.context);
-      this.dialog.setMessage("Getting values for " + this.dataElementName + " on " + this.dataElementDate + "...");
+      this.dialog.setMessage("Getting values for " + this.dataElementName + " on " + this.dataElementDate + " ...");
       this.dialog.show();
    }
 

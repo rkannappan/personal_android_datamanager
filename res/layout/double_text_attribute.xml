@@ -1,11 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<GridView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/assets"
-    android:numColumns="2"
-    android:gravity="center"
-    android:columnWidth="50dp"
-    android:stretchMode="columnWidth"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
- 
-</GridView>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <TextView
+        android:id="@+id/header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+    </TextView>    
+
+	<GridView
+    	android:id="@+id/assets"
+    	android:numColumns="2"
+    	android:gravity="center"
+    	android:columnWidth="50dp"
+    	android:stretchMode="columnWidth"
+    	android:layout_width="fill_parent"
+    	android:layout_height="fill_parent" >
+	</GridView>
+
+</LinearLayout>

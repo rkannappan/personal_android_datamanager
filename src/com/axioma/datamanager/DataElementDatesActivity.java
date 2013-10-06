@@ -16,6 +16,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 
 import com.axioma.datamanager.async.AsyncCallback;
 import com.axioma.datamanager.async.GetDataElementDatesInBackground;
@@ -30,7 +31,7 @@ public class DataElementDatesActivity extends ListActivity implements AsyncCallb
    private String dataElementType;
    private String dataElementName;
 
-   //   public final static String SELECTED_ATTR_DATE = "com.example.myfirstapp.SELECTED_ATTR_DATE";
+   public final static String SELECTED_DATA_ELEMENT_DATE = "com.axioma.datamanager.selected_data_element_date";
 
    @Override
    public void onCreate(Bundle savedInstanceState) {
@@ -88,16 +89,16 @@ public class DataElementDatesActivity extends ListActivity implements AsyncCallb
 
          @Override
          public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            //            // getting values from selected ListItem
-            //            String date = ((TextView) view.findViewById(R.id.name)).getText().toString();
-            //            //                String date = ((ListView) view.findViewById(android.R.id.list)).getSelectedItem().toString();               
-            //
-            //            System.out.println("date is " + date);
-            //
-            //            Intent intent = new Intent(getApplicationContext(), AttributeValuesListActivity.class);
-            //            intent.putExtra(AttributeNamesListActivity.SELECTED_ATTR_NAME, attrName);
-            //            intent.putExtra(DataElementDatesActivity.SELECTED_ATTR_DATE, date);
-            //            startActivity(intent);
+            // getting values from selected ListItem
+            String dataElementDate = ((TextView) view.findViewById(R.id.name)).getText().toString();
+
+            System.out.println("date is " + dataElementDate);
+
+            Intent intent = new Intent(getApplicationContext(), DataElementFullAttributeActivity.class);
+            intent.putExtra(DataElementNamesActivity.SELECTED_DATA_ELEMENT_TYPE, dataElementType);
+            intent.putExtra(DataElementNamesActivity.SELECTED_DATA_ELEMENT_NAME, dataElementName);
+            intent.putExtra(DataElementDatesActivity.SELECTED_DATA_ELEMENT_DATE, dataElementDate);
+            startActivity(intent);
          }
       });
    }

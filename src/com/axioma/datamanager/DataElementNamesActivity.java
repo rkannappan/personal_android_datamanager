@@ -31,7 +31,7 @@ public class DataElementNamesActivity extends ListActivity implements AsyncCallb
    private String dataElementType = null;
 
    public final static String SELECTED_DATA_ELEMENT_TYPE = "com.axioma.datamanager.selected_data_element_type";
-   public final static String SELECTED_DATA_ELEMENT_NAME = "com.example.datamanager.selected_data_element_name";
+   public final static String SELECTED_DATA_ELEMENT_NAME = "com.axioma.datamanager.selected_data_element_name";
 
    @Override
    public void onCreate(Bundle savedInstanceState) {

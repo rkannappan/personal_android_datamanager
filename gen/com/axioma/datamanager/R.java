@@ -24,12 +24,15 @@ public final class R {
         public static final int axioma_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int action_settings=0x7f090001;
-        public static final int name=0x7f090000;
+        public static final int action_settings=0x7f090002;
+        public static final int assets=0x7f090000;
+        public static final int name=0x7f090001;
     }
     public static final class layout {
         public static final int activity_data_elements=0x7f030000;
-        public static final int list_item=0x7f030001;
+        public static final int currency_attribute=0x7f030001;
+        public static final int double_text_attribute=0x7f030002;
+        public static final int list_item=0x7f030003;
     }
     public static final class menu {
         public static final int data_elements=0x7f080000;
@@ -37,6 +40,7 @@ public final class R {
     public static final class string {
         public static final int action_settings=0x7f060001;
         public static final int app_name=0x7f060000;
+        public static final int data=0x7f060004;
         public static final int dates=0x7f060003;
         public static final int names=0x7f060002;
     }

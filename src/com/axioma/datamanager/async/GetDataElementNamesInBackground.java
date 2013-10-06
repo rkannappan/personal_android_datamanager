@@ -1,5 +1,6 @@
 package com.axioma.datamanager.async;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 
@@ -15,13 +16,25 @@ public class GetDataElementNamesInBackground extends AsyncTask<Void, Void, Strin
    private final AsyncCallback callback;
    private final String url;
 
+   private ProgressDialog dialog;
+
+   private final String dataElementType;
+
    public GetDataElementNamesInBackground(final Context context, final String dataElementType, final AsyncCallback callback) {
       this.context = context;
       this.callback = callback;
 
+      this.dataElementType = dataElementType;
       this.url = this.getURL(dataElementType);
 
       System.out.println(url);
+   }
+
+   @Override
+   protected void onPreExecute() {
+      this.dialog = new ProgressDialog(this.context);
+      this.dialog.setMessage("Getting " + this.dataElementType + " ...");
+      this.dialog.show();
    }
 
    @Override
@@ -33,6 +46,7 @@ public class GetDataElementNamesInBackground extends AsyncTask<Void, Void, Strin
    protected void onPostExecute(String results) {
       super.onPostExecute(results);
       System.out.println(results);
+      this.dialog.dismiss();
       callback.postProcessing(results);
    }
 

@@ -119,7 +119,7 @@ public class DataElementFullAttributeActivity extends Activity implements AsyncC
       sb.append("   Name: ").append(this.dataElementName).append("\n");
       sb.append("   Date: ").append(this.dataElementDate).append("\n");
       sb.append("   Unit Type: ").append(unitType).append("\n");
-      sb.append("   Number of Assets: ").append(numAssets).append("\n");
+      sb.append("   Number of Assets: ").append(numAssets);
       textView.setText(sb.toString());
 
       ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, assetValues);

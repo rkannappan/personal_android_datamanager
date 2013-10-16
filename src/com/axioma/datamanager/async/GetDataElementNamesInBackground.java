@@ -39,7 +39,17 @@ public class GetDataElementNamesInBackground extends AsyncTask<Void, Void, Strin
 
    @Override
    protected String doInBackground(Void... params) {
-      return RestClientUtil.getJSONFromUrl(url, this.context);
+      String json = RestClientUtil.getJSONFromUrl(url, this.context);
+
+      String internaljson = null;
+      if (DataElementsActivity.CLASSIFICATION_SCHEMES.equals(dataElementType)
+               || DataElementsActivity.CLASSIFICATIONS.equals(dataElementType)) {
+         String internalurl = url + "?tagName=RiskAnalysis Internal";
+         internaljson = RestClientUtil.getJSONFromUrl(internalurl, this.context);
+         return json + "~" + internaljson;
+      } else {
+         return json;
+      }
    }
 
    @Override
@@ -53,27 +63,39 @@ public class GetDataElementNamesInBackground extends AsyncTask<Void, Void, Strin
    private String getURL(final String dataElementType) {
       String url = null;
 
+      String elementType = null;
+
       if (dataElementType.equals(DataElementsActivity.ALPHAS)) {
-         url = PreferenceUtil.getBaseWSURL(this.context) + "attributeNames?tagName=Alpha";
+         elementType = "attributeNames?tagName=Alpha";
       } else if (dataElementType.equals(DataElementsActivity.BENCHMARKS)) {
-         url = PreferenceUtil.getBaseWSURL(this.context) + "attributeNames?tagName=Benchmark";
+         elementType = "attributeNames?tagName=Benchmark";
       } else if (dataElementType.equals(DataElementsActivity.ASSET_IDENTIFIERS)) {
-         url = PreferenceUtil.getBaseWSURL(this.context) + "attributeNames?tagName=Asset Identifier";
+         elementType = "attributeNames?tagName=Asset Identifier";
       } else if (dataElementType.equals(DataElementsActivity.FUNDAMENTAL_ATTRIBUTES)) {
-         url = PreferenceUtil.getBaseWSURL(this.context) + "attributeNames?tagName=Fundamental Attribute";
+         elementType = "attributeNames?tagName=Fundamental Attribute";
       } else if (dataElementType.equals(DataElementsActivity.FACTOR_LIBRARIES)) {
-         url = PreferenceUtil.getBaseWSURL(this.context) + "attributeNames?tagName=Factor Library";
+         elementType = "attributeNames?tagName=Factor Library";
       } else if (dataElementType.equals(DataElementsActivity.TEXT_ATTRIBUTES)) {
-         url = PreferenceUtil.getBaseWSURL(this.context) + "attributeNames?unitType=TEXT";
+         elementType = "attributeNames?unitType=TEXT";
       } else if (dataElementType.equals(DataElementsActivity.ETF_CONSTITUENTS)) {
-         url = PreferenceUtil.getBaseWSURL(this.context) + "attributeNames?tagName=Composite Constituents Attribute";
+         elementType = "attributeNames?tagName=Composite Constituents Attribute";
       } else if (dataElementType.equals(DataElementsActivity.PORTFOLIOS)) {
-         url = PreferenceUtil.getBaseWSURL(this.context) + "portfolioNames";
+         elementType = "portfolioNames";
       } else if (dataElementType.equals(DataElementsActivity.CURRENCY_ATTRIBUTES)) {
-         url = PreferenceUtil.getBaseWSURL(this.context) + "currencyAttributeNames";
+         elementType = "currencyAttributeNames";
+      } else if (dataElementType.equals(DataElementsActivity.COUNTRY_ATTRIBUTES)) {
+         elementType = "countryAttributeNames";
+      } else if (dataElementType.equals(DataElementsActivity.FACTOR_ATTRIBUTES)) {
+         elementType = "factorAttributeNames";
       } else if (dataElementType.equals(DataElementsActivity.FACTOR_RISK_MODELS)) {
-         url = PreferenceUtil.getBaseWSURL(this.context) + "factorRiskModelNames";
+         elementType = "factorRiskModelNames";
+      } else if (dataElementType.equals(DataElementsActivity.CLASSIFICATION_SCHEMES)) {
+         elementType = "classificationSchemeNames";
+      } else if (dataElementType.equals(DataElementsActivity.CLASSIFICATIONS)) {
+         elementType = "classificationNames";
       }
+
+      url = PreferenceUtil.getBaseWSURL(this.context) + elementType;
 
       return url;
    }

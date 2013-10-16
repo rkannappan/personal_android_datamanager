@@ -100,8 +100,10 @@ public class DataElementDatesActivity extends ListActivity implements AsyncCallb
          @Override
          public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             // We don't support getting full data for FRM.
-            if (DataElementsActivity.FACTOR_RISK_MODELS.equals(dataElementType)) {
-               Toast.makeText(getApplicationContext(), "Full Data View is not supported for factor risk models",
+            if (DataElementsActivity.FACTOR_RISK_MODELS.equals(dataElementType)
+                     || DataElementsActivity.CLASSIFICATION_SCHEMES.equals(dataElementType)
+                     || DataElementsActivity.CLASSIFICATIONS.equals(dataElementType)) {
+               Toast.makeText(getApplicationContext(), "Full Data View is not supported for " + dataElementType,
                         Toast.LENGTH_SHORT).show();
                return;
             }

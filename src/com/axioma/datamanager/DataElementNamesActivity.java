@@ -2,6 +2,7 @@ package com.axioma.datamanager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.SortedSet;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -20,6 +21,7 @@ import android.widget.TextView;
 
 import com.axioma.datamanager.async.AsyncCallback;
 import com.axioma.datamanager.async.GetDataElementNamesInBackground;
+import com.google.common.collect.Sets;
 
 /**
  * @author rkannappan
@@ -50,23 +52,22 @@ public class DataElementNamesActivity extends ListActivity implements AsyncCallb
    public void postProcessing(String results) {
       ArrayList<HashMap<String, String>> namesList = new ArrayList<HashMap<String, String>>();
 
-      // try parse the string to a JSON object
-      try {
-         JSONArray names = new JSONArray(results);
+      // This is a quick hack to remove all the internal elements
+      String[] jsons = results.split("~");
+      SortedSet<String> elementNames = this.getNames(jsons[0]);
+      if (jsons.length == 2) {
+         SortedSet<String> internalNames = this.getNames(jsons[1]);
+         elementNames.removeAll(internalNames);
+      }
 
-         for (int i = 0; i < names.length(); i++) {
-            String name = (String) names.get(i);
+      for (String name : elementNames) {
+         // creating new HashMap
+         HashMap<String, String> map = new HashMap<String, String>();
 
-            // creating new HashMap
-            HashMap<String, String> map = new HashMap<String, String>();
+         // adding each child node to HashMap key => value
+         map.put(DataElementNamesActivity.ELEMENT_NAME, name);
 
-            // adding each child node to HashMap key => value
-            map.put(DataElementNamesActivity.ELEMENT_NAME, name);
-
-            namesList.add(map);
-         }
-      } catch (JSONException e) {
-         Log.e("JSON Parser", "Error parsing data " + e.toString());
+         namesList.add(map);
       }
 
       ListView lv = getListView();
@@ -100,5 +101,23 @@ public class DataElementNamesActivity extends ListActivity implements AsyncCallb
             startActivity(intent);
          }
       });
+   }
+
+   private SortedSet<String> getNames(final String json) {
+      SortedSet<String> elementNames = Sets.newTreeSet();
+
+      // try parse the string to a JSON object
+      try {
+         JSONArray names = new JSONArray(json);
+
+         for (int i = 0; i < names.length(); i++) {
+            String name = (String) names.get(i);
+            elementNames.add(name);
+         }
+      } catch (JSONException e) {
+         Log.e("JSON Parser", "Error parsing data " + e.toString());
+      }
+
+      return elementNames;
    }
 }

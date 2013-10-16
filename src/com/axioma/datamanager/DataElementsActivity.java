@@ -33,7 +33,11 @@ public class DataElementsActivity extends ListActivity {
    public final static String TEXT_ATTRIBUTES = "Text Attributes";
    public final static String ETF_CONSTITUENTS = "ETF Constituents";
    public final static String CURRENCY_ATTRIBUTES = "Currency Attributes";
+   public final static String COUNTRY_ATTRIBUTES = "Country Attributes";
+   public final static String FACTOR_ATTRIBUTES = "Factor Attributes";
    public final static String FACTOR_RISK_MODELS = "Factor Risk Models";
+   public final static String CLASSIFICATION_SCHEMES = "Classification Schemes";
+   public final static String CLASSIFICATIONS = "Classifications";
 
    @Override
    protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +78,11 @@ public class DataElementsActivity extends ListActivity {
       this.dataElements.add(DataElementsActivity.TEXT_ATTRIBUTES);
       this.dataElements.add(DataElementsActivity.ETF_CONSTITUENTS);
       this.dataElements.add(DataElementsActivity.CURRENCY_ATTRIBUTES);
+      //      this.dataElements.add(DataElementsActivity.COUNTRY_ATTRIBUTES);
+      //      this.dataElements.add(DataElementsActivity.FACTOR_ATTRIBUTES);
       this.dataElements.add(DataElementsActivity.FACTOR_RISK_MODELS);
+      this.dataElements.add(DataElementsActivity.CLASSIFICATION_SCHEMES);
+      this.dataElements.add(DataElementsActivity.CLASSIFICATIONS);
 
       ArrayAdapter<String> adapter =
                new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,

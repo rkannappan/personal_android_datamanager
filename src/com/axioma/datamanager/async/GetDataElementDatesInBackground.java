@@ -4,9 +4,9 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 
-import com.axioma.datamanager.DataElementsActivity;
 import com.axioma.datamanager.util.PreferenceUtil;
 import com.axioma.datamanager.util.RestClientUtil;
+import com.axioma.datamanager.util.URLUtil;
 
 /**
  * @author rkannappan
@@ -52,26 +52,9 @@ public class GetDataElementDatesInBackground extends AsyncTask<Void, Void, Strin
    }
 
    private String getURL(final String dataElementType, final String dataElementName) {
-      String url = null;
+      String elementType = URLUtil.getURLElementType(dataElementType);
 
-      String elementType = null;
-
-      if (dataElementType.equals(DataElementsActivity.ALPHAS) || dataElementType.equals(DataElementsActivity.BENCHMARKS)
-               || dataElementType.equals(DataElementsActivity.ASSET_IDENTIFIERS)
-               || dataElementType.equals(DataElementsActivity.FUNDAMENTAL_ATTRIBUTES)
-               || dataElementType.equals(DataElementsActivity.FACTOR_LIBRARIES)
-               || dataElementType.equals(DataElementsActivity.TEXT_ATTRIBUTES)
-               || dataElementType.equals(DataElementsActivity.ETF_CONSTITUENTS)) {
-         elementType = "attributes";
-      } else if (dataElementType.equals(DataElementsActivity.PORTFOLIOS)) {
-         elementType = "portfolios";
-      } else if (dataElementType.equals(DataElementsActivity.CURRENCY_ATTRIBUTES)) {
-         elementType = "currencyAttributes";
-      } else if (dataElementType.equals(DataElementsActivity.FACTOR_RISK_MODELS)) {
-         elementType = "factorRiskModels";
-      }
-
-      url = PreferenceUtil.getBaseWSURL(this.context) + elementType + "/" + dataElementName + "/dates";
+      String url = PreferenceUtil.getBaseWSURL(this.context) + elementType + "/" + dataElementName + "/dates";
 
       return url;
    }
